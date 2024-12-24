@@ -1,0 +1,103 @@
+<!-- <!DOCTYPE html> -->
+<html lang="en">
+  <html lang="km">
+    <head>
+      <style>
+        img {
+          position: absolute;
+          top: 30px;
+          right: 30px;
+          width: 100px;
+          height: auto;
+          opacity: 0.6;
+          z-index: 1;
+        }
+        #player {
+          position: absolute;
+          width: 100% !important;
+          height: 100% !important;
+        }
+        .jwplayer .jw-rightclick .jw-rightclick-list {
+          border-radius: 1px;
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          display: none;
+        }
+      </style>
+      <link
+        href="https://res.cloudinary.com/dn6dgbjj5/raw/upload/v1729633183/JW%20player%20Code/Skin%20Netflix.css"
+        rel="stylesheet"
+      />
+    </head>
+    <body>
+      <img src="https://i.imgur.com/umTyaSP.png" />
+      <script
+        src="https://res.cloudinary.com/dn6dgbjj5/raw/upload/v1718201588/JW%20player%20Code/JW_player.js"
+        type="text/javascript"
+      ></script>
+      <!-- Player -->
+      <div id="player"></div>
+      <script>
+        const playerInstance = jwplayer("player").setup({
+          controls: true,
+          sharing: true,
+          displaytitle: false,
+          displaydescription: true,
+          abouttext: "Buy Me a Coffee",
+          aboutlink: "@W88movie",
+          skin: {
+          name: "netflix",
+          },
+          captions: {
+            color: "#FFF",
+            fontSize: 16,
+            backgroundOpacity: 100,
+            edgeStyle: "uniform",
+          },
+          playlist: [
+            {
+              image: "#",
+              sources: [
+                {
+                  file: "https://1a-1791.com/video/s8/2/M/C/v/V/MCvVv.aaa.mp4?u=0&b=0",
+                  label: "Auto",
+                  default: true,
+                },
+                {
+                  file: "https://1a-1791.com/video/s8/2/M/C/v/V/MCvVv.aaa.mp4?u=0&b=0",
+                  label: "720p",
+                },
+                {
+                  file: "https://1a-1791.com/video/s8/2/M/C/v/V/MCvVv.aaa.mp4?u=0&b=0",
+                  label: "480p",
+                },
+              ],
+              captions: [
+                {
+                  file: "#",
+                  label: "ខ្មែរ",
+                  kind: "captions",
+                  default: true,
+                },
+                {
+                  file: "#",
+                  label: "English",
+                  kind: "captions",
+                },
+              ],
+            },
+          ],
+          advertising: {
+            client: "vast",
+          },
+          autostart: true, // Enable autoplay
+          repeat: true, // Enable looping
+        });
+        playerInstance.on("ready", function () {
+          // Your existing button and control setup code here...
+        });
+      </script>
+    </body>
+  </html>
+</html>
