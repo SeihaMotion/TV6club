@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video.js Player</title>
+    <!-- Video.js CSS -->
+    <link href="https://vjs.zencdn.net/8.16.1/video-js.css" rel="stylesheet">
+    <style>
+        body {
+            text-align: center;
+            background-color: #f5f5f5;
+        }
+
+        /* Center the player */
+        .video-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Customize player */
+        .video-js {
+            width: 720px;
+            height: 400px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Customize play button */
+        .vjs-big-play-button {
+            background-color: rgba(255, 255, 255, 0.7) !important;
+            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="video-container">
+        <!-- Video.js Player -->
+        <video id="my-video" class="video-js vjs-default-skin" controls preload="auto" data-setup='{}'>
+            <source src="https://1a-1791.com/video/fwe2/fc/s8/2/d/f/T/a/dfTax.caa.mp4" type="video/mp4">
+
+            <!-- Subtitles / Captions -->
+            <track kind="subtitles" src="https://res.cloudinary.com/dqqytifpj/raw/upload/v1738666135/the.double.2024.s01e13.chinese.webrip.nf.en_s7m59p.vtt" srclang="en" label="English" default>
+            <track kind="subtitles" src="https://res.cloudinary.com/dqqytifpj/raw/upload/v1738666135/the.double.2024.s01e13.chinese.webrip.nf.en_s7m59p.vtt" srclang="es" label="Español">
+
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <!-- Video.js JavaScript -->
+    <script src="https://vjs.zencdn.net/8.16.1/video.min.js"></script>
+    <script>
+        var player = videojs('my-video');
+
+        // Enable subtitles by default
+        player.ready(function() {
+            var tracks = player.textTracks();
+            for (var i = 0; i < tracks.length; i++) {
+                if (tracks[i].kind === "subtitles") {
+                    tracks[i].mode = "showing"; // Show subtitles by default
+                }
+            }
+            console.log("Video Player is ready with subtitles!");
+        });
+    </script>
+
+</body>
+</html>
