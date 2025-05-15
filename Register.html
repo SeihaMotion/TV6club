@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register Form</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: #fff;
+    }
+
+    .form-container {
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 25px;
+      border-radius: 8px;
+      background-color: #xxxxxx;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #00d0ff;
+    }
+
+    .input-group {
+      margin-bottom: 15px;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    .input-group input,
+    .input-group select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #444;
+      border-radius: 6px;
+      background-color: #2b2b2b;
+      color: #fff;
+      box-sizing: border-box;
+    }
+
+    .input-group input:focus,
+    .input-group select:focus {
+      border-color: #00d0ff;
+      outline: none;
+    }
+
+    .submit-button {
+      width: 100%;
+      padding: 14px;
+      background-color: #00d0ff;
+      color: #000;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .submit-button:hover {
+      background-color: #00b3e6;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Register form</h2>
+    <form id="register-form">
+      <div class="input-group">
+        <label for="fullname">Full Name</label>
+        <input type="text" id="fullname" name="fullname" placeholder="Your full name" required />
+      </div>
+
+      <div class="input-group">
+        <label for="phone">Phone</label>
+        <input type="tel" id="phone" name="phone" placeholder="e.g. 012345678" pattern="[0-9]{8,12}" required />
+      </div>
+
+      <div class="input-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="example@example.com" required />
+      </div>
+
+      <div class="input-group">
+        <label for="bank">Bank Name</label>
+        <select id="bank" name="bank" required>
+          <option value="">-- Select Bank --</option>
+          <option value="ABA">ABA</option>
+          <option value="Wing">Wing</option>
+          <option value="True Money">True Money</option>
+          <option value="ACLEDA Bank">ACLEDA Bank</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label for="bank-name">Bank Account Name</label>
+        <input type="text" id="bank-name" name="bank-name" placeholder="Account Holder's Name" required />
+      </div>
+
+      <div class="input-group">
+        <label for="bank-number">Bank Account Number</label>
+        <input type="text" id="bank-number" name="bank-number" placeholder="1234567890" required />
+      </div>
+
+      <button type="submit" class="submit-button">Register</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('register-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const fullName = document.getElementById('fullname').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const bankOption = document.getElementById('bank').value;
+      const accountName = document.getElementById('bank-name').value.trim();
+      const bankNumber = document.getElementById('bank-number').value.trim();
+
+      if (!fullName || !phone || !email || !bankOption || !accountName || !bankNumber) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      const message =
+        `New Registration\n` +
+        `Name: ${fullName}\n` +
+        `Phone: ${phone}\n` +
+        `Email: ${email}\n` +
+        `Bank: ${bankOption}\n` +
+        `Account Name: ${accountName}\n` +
+        `Account Number: ${bankNumber}`;
+
+      const encodedMessage = encodeURIComponent(message);
+      const telegramURL = "https://t.me/W88pix?text=" + encodedMessage;
+
+      window.open(telegramURL, '_blank');
+    });
+  </script>
+</body>
+</html>
