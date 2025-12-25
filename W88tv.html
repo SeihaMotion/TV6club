@@ -1,0 +1,205 @@
+<div class="cinema-container">
+  <button class="theme-toggle" id="themeBtn" title="Dark Mode"></button>
+
+  <div class="movie-card">
+    <div class="movie-backdrop"></div>
+    <div class="movie-content">
+
+      <div class="poster-wrapper">
+        <div style="position: relative;">
+          <img alt="Movie Poster" class="poster-img" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjpjz7SkOBrLb3HyvUz0Rp9C2LsCPB035iVjK8V7LKK530ahp1bPVUeK1H6hPjnhaQpx5EENGz7YyHOEcjwFF64LS652nG5QUfAo8yOJKFkTny26CpcYMAoIH6vMg13IF3Le_3An1iNUJ5FrrvgLqGLCkIAEuZkPHyuYuyQWxBsElc6S96k-d0fgQ/s1067/ak.png" />
+        </div>
+        <div class="genre-tags">
+          <span class="tag">Chinese Drama</span>
+          <div class="rating-row">
+            <span>★★★★☆</span>
+            <span color="var(--text-sub)" style="font-size: 13px;">❤7.5 likes</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-wrapper">
+        <h1 class="movie-title"><span style="color: #eab308;">
+          Tale of Arang <span class="badge">2012</span></span>
+        </h1>
+        <div class="movie-subtitle">Tale of Arang  </div>
+
+        <div class="movie-desc" style="text-align: justify;">
+The foolhardy ghost of the young girl Arang seeks to discover the truth behind her unjust death and meets a magistrate named Eunoh, who has the ability to see ghosts.
+        </div>
+
+        <div class="movie-meta">
+          <dl>
+            <div class="meta-row">
+              <dt>Director</dt>
+              <dd>James Cameron</dd>
+            </div>
+            <div class="meta-row">
+              <dt>Stars</dt>
+              <dd>
+                Shin Min-a <span class="dot">|</span>
+                Lee Joon-gi <span class="dot">|</span>
+                Yeon Woo-jin
+              </dd>
+            </div>
+          </dl>
+        </div>
+        </div>
+    </div>
+  </div>
+  <div class="cinema-player-wrapper">
+    <video controls="" id="mainVideo" playsinline="" poster="https://via.placeholder.com/800x450/000000/FFFFFF?text=Select+Episode">
+      <source src="" type="video/mp4"></source>
+    </video>
+    <iframe allow="autoplay; fullscreen" allowfullscreen="" id="embedPlayer"></iframe>
+  </div>
+
+  <div class="control-bar">
+    <button class="nav-btn" onclick="prevEpisode()">« Prev</button> Thank you! For watching...
+    <button class="nav-btn" onclick="nextEpisode()">Next Episode »</button>
+  </div>
+  <div class="episode-grid" id="episodeList"></div>
+</div>
+<script>
+  // CONFIGURATION light or drak
+  const defaultTheme = 'drak';
+
+  // YOUR FULL LIST OF LINKS
+  const videoLinks = [
+  "https://ok.ru/videoembed/1114602605065?autoplay=1",
+  "https://ok.ru/videoembed/1115231881737?autoplay=1",
+  "https://ok.ru/videoembed/1115701447177?autoplay=1",
+  "https://ok.ru/videoembed/1118799071753?autoplay=1",
+  "https://ok.ru/videoembed/1124611066377?autoplay=1",
+  "https://ok.ru/videoembed/1125797464585?autoplay=1",
+  "https://ok.ru/videoembed/1125990468105?autoplay=1",
+  "https://ok.ru/videoembed/1128429128201?autoplay=1",
+  "https://ok.ru/videoembed/1131975739913?autoplay=1",
+  "https://ok.ru/videoembed/1134804732425?autoplay=1",
+  "https://ok.ru/videoembed/1137548528137?autoplay=1",
+  "https://ok.ru/videoembed/1138278009353?autoplay=1",
+  "https://ok.ru/videoembed/1141846379017?autoplay=1",
+  "https://ok.ru/videoembed/1141846510089?autoplay=1",
+  "https://ok.ru/videoembed/1141846575625?autoplay=1",
+  "https://ok.ru/videoembed/1143858661897?autoplay=1",
+  "https://ok.ru/videoembed/1144808802825?autoplay=1",
+  "https://ok.ru/videoembed/1144851270153?autoplay=1",
+  "https://ok.ru/videoembed/1146108119561?autoplay=1",
+  "https://ok.ru/videoembed/1146117163529?autoplay=1",
+  "https://ok.ru/videoembed/1150307797513?autoplay=1",
+  "https://ok.ru/videoembed/1150315923977?autoplay=1",
+  "https://ok.ru/videoembed/1151133223433?autoplay=1",
+  "https://ok.ru/videoembed/1151144102409?autoplay=1",
+  "https://ok.ru/videoembed/1152169937417?autoplay=1",
+  "https://ok.ru/videoembed/1152183110153?autoplay=1",
+  "https://ok.ru/videoembed/1152966003209?autoplay=1",
+  "https://ok.ru/videoembed/1152977013257?autoplay=1",
+  "https://ok.ru/videoembed/1156385606153?autoplay=1",
+  "https://ok.ru/videoembed/1156554754569?autoplay=1",
+  "https://ok.ru/videoembed/1156610329097?autoplay=1",
+  "https://ok.ru/videoembed/1157860297225?autoplay=1",
+  "https://ok.ru/videoembed/1157880678921?autoplay=1",
+  "https://ok.ru/videoembed/1157889460745?autoplay=1"
+  ];
+
+  const mp4Player = document.getElementById('mainVideo');
+  const embedPlayer = document.getElementById('embedPlayer');
+  const listContainer = document.getElementById('episodeList');
+  const themeBtn = document.getElementById('themeBtn');
+  const container = document.querySelector('.cinema-container');
+  let currentIndex = 0;
+
+  // --- SAFE ICONS ---
+  const SUN_ICON = '\u2600';
+  const MOON_ICON = '\u263D';
+
+  // --- THEME SETUP ---
+  if (defaultTheme === 'light') {
+    container.classList.add('light-mode');
+    themeBtn.innerText = MOON_ICON;
+  } else {
+    container.classList.remove('light-mode');
+    themeBtn.innerText = SUN_ICON;
+  }
+
+  themeBtn.addEventListener('click', () => {
+    container.classList.toggle('light-mode');
+    if (container.classList.contains('light-mode')) {
+      themeBtn.innerText = MOON_ICON;
+    } else {
+      themeBtn.innerText = SUN_ICON;
+    }
+  });
+
+  // --- PLAYLIST LOGIC ---
+  function initPlaylist() {
+    listContainer.innerHTML = "";
+    videoLinks.forEach((link, index) => {
+      const btn = document.createElement('div');
+      btn.className = 'ep-btn';
+      const num = index + 1;
+      btn.innerText = num < 10 ? '0' + num : num;
+      btn.onclick = () => playEpisode(index);
+      listContainer.appendChild(btn);
+    });
+    // Load first video if available
+    if(videoLinks.length > 0) playEpisode(0, false);
+  }
+
+  function playEpisode(index, autoPlay = true) {
+    if(index < 0 || index >= videoLinks.length) return;
+    currentIndex = index;
+    let url = videoLinks[index];
+
+    // Auto-fix OK.ru links
+    if (url.includes('ok.ru/video/')) url = url.replace('ok.ru/video/', 'ok.ru/videoembed/');
+
+    const isEmbed = url.includes('ok.ru') || url.includes('embed') || url.includes('youtube');
+
+    if (isEmbed) {
+        mp4Player.pause();
+        mp4Player.style.display = 'none';
+        embedPlayer.style.display = 'block';
+        embedPlayer.src = url;
+    } else {
+        embedPlayer.style.display = 'none';
+        embedPlayer.src = '';
+        mp4Player.style.display = 'block';
+        mp4Player.src = url;
+        if (autoPlay) mp4Player.play();
+    }
+
+    // Highlight active button
+    document.querySelectorAll('.ep-btn').forEach((btn, idx) => {
+        if (idx === index) btn.classList.add('active');
+        else btn.classList.remove('active');
+    });
+
+    const activeBtn = document.querySelectorAll('.ep-btn')[index];
+    if(activeBtn) {
+        activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+  }
+
+  // --- MANUAL NAVIGATION ---
+  function nextEpisode() {
+    if (currentIndex < videoLinks.length - 1) {
+      playEpisode(currentIndex + 1);
+    }
+  }
+
+  function prevEpisode() {
+    if (currentIndex > 0) {
+      playEpisode(currentIndex - 1);
+    }
+  }
+
+  // --- AUTO NEXT ---
+  mp4Player.addEventListener('ended', () => {
+    nextEpisode();
+  });
+
+  initPlaylist();
+</script>
+<br />
+Lee Eun Oh, a noble's son, arrives at a small village in search of his missing mother. There, Arang, the ghost of a young woman that lost her memories of her past life, asks him to help her to figure out her identity and how she died.

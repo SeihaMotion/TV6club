@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JW Player - Kantumruy Pro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    <link href='https://res.cloudinary.com/dn6dgbjj5/raw/upload/v1729633183/JW%20player%20Code/Skin%20Netflix.css' rel='stylesheet'/>
+
+    <style>
+        /* --- 1. GLOBAL RESET --- */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000;
+            font-family: "Kantumruy Pro", sans-serif;
+        }
+
+        /* --- 2. PLAYER CONTAINER --- */
+        #player {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+        }
+        /* --- 3. WATERMARK LOGO --- */
+        .watermark {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            width: 100px;
+            height: auto;
+            opacity: 0.6;
+            z-index: 999; /* On top of video */
+            pointer-events: none; /* Clicks pass through */
+            user-select: none;
+        }
+
+        /* --- 4. JW PLAYER OVERRIDES --- */
+        /* Hide right-click menu */
+        .jwplayer .jw-rightclick .jw-rightclick-list {
+            display: none !important;
+        }
+
+        /* Force font consistency in player UI */
+        .jw-reset, .jw-text, .jw-knob, .jw-option {
+            font-family: "Kantumruy Pro", sans-serif !important;
+        }
+    </style>
+</head>
+<body>
+
+    <img src="https://i.imgur.com/umTyaSP.png" alt="Logo" class="watermark" />
+
+    <div id="player"></div>
+
+    <script src='https://res.cloudinary.com/dn6dgbjj5/raw/upload/v1718201588/JW%20player%20Code/JW_player.js'></script>
+
+    <script>
+        // --- CONFIGURATION ---
+
+        // 1. Define Caption Style
+        const captionSettings = {
+            color: "#FFFFFF",
+            fontSize: 16,
+            backgroundOpacity: 0,
+            edgeStyle: "raised",
+            fontFamily: "Kantumruy Pro, sans-serif"
+        };
+
+        // 2. Define Playlist Data
+        const moviePlaylist = [
+            {
+                image: "", // Optional: Poster URL
+                sources: [
+                    { file: "//bigf.bigo.sg/asia_live/V4s7/0ZsgLS.mp4", label: "Auto", default: true },
+                    { file: "//bigf.bigo.sg/asia_live/V4s7/0ZsgLS.mp4", label: "720p" },
+                    { file: "//bigf.bigo.sg/asia_live/V4s7/0ZsgLS.mp4", label: "480p" }
+                ],
+                captions: [
+                    {
+                        file: "https://res.cloudinary.com/dqqytifpj/raw/upload/v1733339737/Talk.to.Me.2022Khmer_jycfih.srt",
+                        label: "ខ្មែរ",
+                        kind: "captions",
+                        default: true
+                    },
+                    {
+                        file: "https://res.cloudinary.com/dqqytifpj/raw/upload/v1733339750/Talk.to.Me.2022.720p.WEB-DL.DDP5.1.H.264-FLUX.da_nnkysl.srt",
+                        label: "English",
+                        kind: "captions"
+                    }
+                ]
+            }
+        ];
+
+        // --- INITIALIZATION ---
+
+        const playerInstance = jwplayer("player").setup({
+            // Core Settings
+            width: "100%",
+            height: "100%",
+            autostart: true,
+            repeat: true,
+            stretching: "uniform",
+
+            // UI & Branding
+            controls: true,
+            sharing: true,
+            displaytitle: false,
+            displaydescription: true,
+            abouttext: "Buy Me a Coffee",
+            aboutlink: "@W88movie",
+            skin: { name: "netflix" },
+
+            // Content
+            playlist: moviePlaylist,
+            captions: captionSettings,
+            advertising: { client: "vast" }
+        });
+
+        // Optional: Log when ready
+        playerInstance.on("ready", () => {
+            console.log("Player Loaded Successfully");
+        });
+
+    </script>
+</body>
+</html>

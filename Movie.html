@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;700&display=swap" rel="stylesheet">
+    <link href='https://res.cloudinary.com/dn6dgbjj5/raw/upload/v1729633183/JW%20player%20Code/Skin%20Netflix.css' rel='stylesheet'/>
+
+    <style>
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; font-family: "Kantumruy Pro", sans-serif; }
+        .watermark { position: absolute; top: 30px; right: 30px; width: 100px; opacity: 0.6; z-index: 99; pointer-events: none; }
+        .jw-reset, .jw-text { font-family: "Kantumruy Pro", sans-serif !important; }
+        .jw-rightclick { display: none !important; }
+    </style>
+</head>
+<body>
+    <img src="https://i.imgur.com/umTyaSP.png" class="watermark" />
+    <div id="player"></div>
+    <script src='https://res.cloudinary.com/dn6dgbjj5/raw/upload/v1718201588/JW%20player%20Code/JW_player.js'></script>
+    <script>
+        jwplayer("player").setup({
+            width: "100%", height: "100%", autostart: true, repeat: true,
+            skin: { name: "netflix" },
+            abouttext: "Buy Me a Coffee", aboutlink: "@W88movie",
+            captions: { color: "#FFF", fontSize: 16, edgeStyle: "raised", backgroundOpacity: 0, fontFamily: "Kantumruy Pro, sans-serif" },
+            playlist: [{
+                sources: [
+                    { file: "//bigf.bigo.sg/asia_live/V4s7/0ZsgLS.mp4", label: "Auto", default: true },
+                    { file: "//bigf.bigo.sg/asia_live/V4s7/0ZsgLS.mp4", label: "720p" },
+                    { file: "//bigf.bigo.sg/asia_live/V4s7/0ZsgLS.mp4", label: "480p" }
+                ],
+                captions: [
+                    { file: "https://res.cloudinary.com/dqqytifpj/raw/upload/v1733339737/Talk.to.Me.2022Khmer_jycfih.srt", label: "ខ្មែរ", default: true },
+                    { file: "https://res.cloudinary.com/dqqytifpj/raw/upload/v1733339750/Talk.to.Me.2022.720p.WEB-DL.DDP5.1.H.264-FLUX.da_nnkysl.srt", label: "English" }
+                ]
+            }]
+        });
+    </script>
+</body>
+</html>
